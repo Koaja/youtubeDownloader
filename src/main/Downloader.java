@@ -1,5 +1,6 @@
 package main;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -16,7 +17,6 @@ public class Downloader {
 	WebElement converterBtn;
 
 	@FindBy(xpath = ".//*[@id='dl_link']/a[4]")
-	@CacheLookup
 	WebElement downloadBtn;
 
 	@FindBy(id = "progress_info")
@@ -36,8 +36,22 @@ public class Downloader {
 
 	public void clickDownloadButton() {
 
-		System.out.println(downloadBtn.isDisplayed());
-		downloadBtn.click();
+		// WebDriverWait wait = new WebDriverWait(driver, 15);
+		// wait.until(ExpectedConditions.elementToBeClickable(downloadBtn)).click();
+
+		try {
+			downloadBtn.click();
+		} catch (Exception e) {
+			try {
+				driver.findElement(By.xpath(".//*[@id='dl_link']/a[3]")).click();
+			} catch (Exception d) {
+				try {
+					driver.findElement(By.xpath(".//*[@id='dl_link']/a[2]")).click();
+				} catch (Exception f) {
+					driver.findElement(By.xpath(".//*[@id='dl_link']/a[1]")).click();
+				}
+			}
+		}
 	}
 
 	public void addLinkToField(String link) {
