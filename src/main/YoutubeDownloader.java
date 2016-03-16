@@ -25,7 +25,7 @@ public class YoutubeDownloader {
 
 		ProfilesIni profile = new ProfilesIni();
 
-		FirefoxProfile myprofile = profile.getProfile("SetupWithoutDowloadPrompt");
+		FirefoxProfile myprofile = profile.getProfile("YoutubeDownloadPromptRemoved");
 
 		driver = new FirefoxDriver(myprofile);
 
@@ -48,13 +48,10 @@ public class YoutubeDownloader {
 			dler.clickConverButton();
 
 			String parentHandle = driver.getWindowHandle();
-			for (String handle : driver.getWindowHandles()) {
-				if (!handle.equals(parentHandle)) {
-					driver.switchTo().window(handle).close();
-				}
-			}
-			driver.switchTo().window(parentHandle);
 
+			System.out.println("Attempting to download " + ytpl.getSongName());
+
+			driver.switchTo().window(parentHandle);
 			dler.clickDownloadButton();
 
 		}

@@ -15,6 +15,12 @@ public class YoutubePlaylist {
 	@FindBy(xpath = "//td[@class='pl-video-title']/a[contains(@href,'/watch')]")
 	List<WebElement> playlistSongs;
 
+	@FindBy(xpath = ".//*[@id='pl-load-more-destination']/tr[1]")
+	List<WebElement> songNames;
+
+	@FindBy(xpath = ".//*[@id='title']")
+	WebElement titleSong;
+
 	public YoutubePlaylist(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -22,13 +28,16 @@ public class YoutubePlaylist {
 
 	public ArrayList<String> getAllLinks() {
 
-		ArrayList<String> songs = new ArrayList<>();
+		ArrayList<String> songsUrl = new ArrayList<>();
 
 		for (WebElement elem : playlistSongs) {
-			songs.add(elem.getAttribute("href"));
+			songsUrl.add(elem.getAttribute("href"));
 		}
 
-		return songs;
+		return songsUrl;
 	}
 
+	public String getSongName() {
+		return titleSong.getText();
+	}
 }
