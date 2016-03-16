@@ -19,9 +19,6 @@ public class Downloader {
 	@FindBy(xpath = ".//*[@id='dl_link']/a[4]")
 	WebElement downloadBtn;
 
-	@FindBy(id = "progress_info")
-	WebElement downloadBox;
-
 	@FindBy(id = "youtube-url")
 	WebElement urlInput;
 
@@ -35,9 +32,6 @@ public class Downloader {
 	}
 
 	public void clickDownloadButton() {
-
-		// WebDriverWait wait = new WebDriverWait(driver, 15);
-		// wait.until(ExpectedConditions.elementToBeClickable(downloadBtn)).click();
 
 		try {
 			downloadBtn.click();

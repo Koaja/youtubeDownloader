@@ -30,10 +30,6 @@ public class YoutubeDownloader {
 		driver = new FirefoxDriver(myprofile);
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		FirefoxProfile firefoxProfile = new FirefoxProfile();
-		firefoxProfile.setPreference("browser.download.dir", dest_path);
-		firefoxProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-		firefoxProfile.setPreference("browser.download.manager.showWhenStarting", false);
 
 		driver.get(youtubeURL);
 	}
@@ -51,18 +47,13 @@ public class YoutubeDownloader {
 			dler.addLinkToField(link);
 			dler.clickConverButton();
 
-			Thread.sleep(2000);
-
 			String parentHandle = driver.getWindowHandle();
+			for (String handle : driver.getWindowHandles()) {
+				if (!handle.equals(parentHandle)) {
+					driver.switchTo().window(handle).close();
+				}
+			}
 			driver.switchTo().window(parentHandle);
-			// for (String handle : driver.getWindowHandles()) {
-			// if (!handle.equals(parentHandle)) {
-			// driver.switchTo().window(handle).close();
-			// }
-			// }
-
-			Thread.sleep(2000);
-			
 
 			dler.clickDownloadButton();
 
