@@ -52,6 +52,7 @@ public class YoutubeDownloader {
 			System.out.println("Attempting to download " + ytpl.getSongName());
 
 			driver.switchTo().window(parentHandle);
+
 			dler.clickDownloadButton();
 
 		}

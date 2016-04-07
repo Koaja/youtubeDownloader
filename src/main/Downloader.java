@@ -1,6 +1,7 @@
 package main;
 
-import org.openqa.selenium.By;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,8 +14,8 @@ public class Downloader {
 	@FindBy(id = "submit")
 	WebElement converterBtn;
 
-	@FindBy(xpath = ".//*[@id='dl_link']/a[4]")
-	WebElement downloadBtn;
+	@FindBy(xpath = ".//*[@id='dl_link']/a")
+	List<WebElement> downloadBtn;
 
 	@FindBy(id = "youtube-url")
 	WebElement urlInput;
@@ -30,19 +31,17 @@ public class Downloader {
 
 	public void clickDownloadButton() {
 
-		try {
-			downloadBtn.click();
-		} catch (Exception e) {
+		for (WebElement elem : downloadBtn) {
 			try {
-				driver.findElement(By.xpath(".//*[@id='dl_link']/a[3]")).click();
-			} catch (Exception d) {
-				try {
-					driver.findElement(By.xpath(".//*[@id='dl_link']/a[2]")).click();
-				} catch (Exception f) {
-					driver.findElement(By.xpath(".//*[@id='dl_link']/a[1]")).click();
-				}
+				System.out.println("Attempting to click on download button ");
+				elem.click();
+				System.out.println("-- Found the good button, moving on to next song --");
+				break;
+			} catch (Exception e) {
+				System.out.println("That button wasn't found, trying the next one ");
 			}
 		}
+
 	}
 
 	public void addLinkToField(String link) {
